@@ -1,9 +1,10 @@
--name: "Installing Balancer Software HAProxy"
- yum: name=haproxy state=present
+---
+- name: "Installing Balancer Software HAProxy"
+  yum: name=haproxy state=present
 
 #-name: "Configure Haproxy"
 # template: src=haproxy.cfg dest=/etc/haproxy/haproxy.cfg
 
--name: "Start HAProxy"
- service: name=haproxy state=running
+- name: "Start HAProxy"
+  service: name=haproxy state=running
 
