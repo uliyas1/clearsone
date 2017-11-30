@@ -1,0 +1,12 @@
+---
+- name: enable-proxyip-changes
+  #shell: haproxy haproxy.cfg
+  #notify:
+  #- restart_haproxy
+  service: name=haproxy state=restarted
+  
+- name: restart_haproxy
+  service: name=haproxy state=restarted
+
+- name: reload_haproxy
+  service: name=haproxy state=reloaded
