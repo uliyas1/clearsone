@@ -1,11 +1,11 @@
 ---
-- name: "Installing Balancer Software HAProxy"
+- name: Installing Balancer Software HAProxy
   yum: name=haproxy state=present
 
-- name: "Configure Haproxy"
+- name: Configure Haproxy
   template: src=haproxy.cfg dest=/etc/haproxy/haproxy.cfg owner=root group=root mode=644
   notify:
-  - enable-proxyip-changes
+  - enable-proxyip&haproxy-changes
 
 - name: Ensure HAProxy is started and enabled to start at boot.
   service: name=haproxy state=started enabled=yes

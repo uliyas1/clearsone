@@ -1,11 +1,11 @@
 ---
-- name: "Installing application server SW NGINX"
+- name: Installing application server SW NGINX
   yum: name=nginx state=present
 
-- name: "Copy virtual config file to nginx conf"
+- name: Copy virtual config file to nginx conf
   template: src=celerone.conf dest=/etc/nginx/conf.d/celerone.conf owner=root group=root mode=644
   notify:
-  - enable-docroot-changes
+  - enable-docroot&nginx-changes
 
 - name: Creates docroot directory
   file: path=/var/www state=directory 
@@ -13,7 +13,7 @@
 - name: "Application Document root"
   template: src=local.html dest=/var/www/local.html owner=root group=root mode=777
   notify:
-  - enable-docroot-changes
+  - enable-docroot&nginx-changes
 
 - name: Ensure NGINX is started and enabled to start at boot.
   service: name=nginx state=started enabled=yes

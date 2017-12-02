@@ -1,6 +1,3 @@
 ---
-- name: enable-docroot-changes
-  #shell: haproxy haproxy.cfg
-  #notify:
-  #- restart_haproxy
+- name: enable-docroot&nginx-changes
   service: name=nginx state=restarted
