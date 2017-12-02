@@ -7,6 +7,5 @@
   notify:
   - enable-proxyip-changes
 
-- name: "Start HAProxy"
-  service: name=haproxy state=running
-
+- name: Ensure HAProxy is started and enabled to start at boot.
+  service: name=haproxy state=started enabled=yes

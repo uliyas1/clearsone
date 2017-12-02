@@ -1,5 +1,10 @@
 ---
-- hosts: all
+- hosts: 10.0.6.71
+  become: true
+  roles:
+  - balancer
+
+- hosts: 10.0.6.162
   become: true
   roles:
   - balancer

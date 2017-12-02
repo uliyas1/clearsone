@@ -1,0 +1,6 @@
+---
+- name: "Installing application server SW NGINX"
+  yum: name=nginx state=present
+
+#- name: "Application Document root"
+#  template: src=local.html dest=/var/www/local.html owner=root group=root mode=777
