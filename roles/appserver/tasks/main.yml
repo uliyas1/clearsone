@@ -43,7 +43,7 @@
   notify: enable-docroot&nginx-changes 
 
 - name: Copy virtual config file to nginx conf
-  template: src=celerone.conf dest=/etc/nginx/conf.d/celeraone.conf owner=root group=root mode=644
+  template: src=celeraone.conf dest=/etc/nginx/conf.d/celeraone.conf owner=root group=root mode=644
   notify:
   - enable-docroot&nginx-changes
 
