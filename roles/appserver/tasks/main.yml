@@ -2,7 +2,10 @@
 - name: Installing application server SW NGINX
   yum: name=nginx state=present
 
-- name: Copy virtual config file to nginx conf
+- name: Installing php
+  yum: name=php state=present
+
+- name: Copy nginx.conf file
   template: src=nginx.conf dest=/etc/nginx/nginx.conf owner=root group=root mode=644
   notify:
   - enable-docroot&nginx-changes
