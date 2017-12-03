@@ -9,15 +9,15 @@
 
 - name: get the cpu count & assigned to nginx worker_processes
   shell: grep processor /proc/cpuinfo | wc -l
-  register: worker_processes
-  - set_fact:
-    worker_processes: "{{ worker_processes.stdout }}"
+  register: worker_processes_out
+  set_fact:
+   worker_processes: "{{ worker_processes_out.stdout }}"
 
 - name: get the core limit & assigned to nginx worker_connections
   shell: ulimit -n
-  register: worker_connections
-  - set_fact:
-    worker_connections: "{{ worker_connections.stdout }}"
+  register: worker_connections_out
+  set_fact:
+   worker_connections: "{{ worker_connections_out.stdout }}"
 
 - name: Copy virtual config file to nginx conf
   template: src=celerone.conf dest=/etc/nginx/conf.d/celerone.conf owner=root group=root mode=644
