@@ -6,7 +6,7 @@
   template: src=nginx.conf dest=/etc/nginx/nginx.conf owner=root group=root mode=644
   notify:
   - enable-docroot&nginx-changes
-
+  
 - name: get the cpu count & assigned to nginx worker_processes
   shell: grep processor /proc/cpuinfo | wc -l
   register: worker_processes_out
@@ -22,6 +22,15 @@
 - name: set fact of worker_connections
   set_fact:
    worker_connections: "{{ worker_connections_out.stdout }}"
+
+- name: Set Nginx worker_processes & worker_connections
+  lineinfile: 
+    dest: /etc/nginx/nginx.conf
+    #regexp: "^user"
+    line: "worker_processes {{ worker_processes }};"
+    line: "worker_connections {{ worker_connections }};"
+    state: present
+  notify: restart nginx 
 
 - name: Copy virtual config file to nginx conf
   template: src=celerone.conf dest=/etc/nginx/conf.d/celerone.conf owner=root group=root mode=644
