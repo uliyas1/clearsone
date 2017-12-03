@@ -34,8 +34,8 @@
 - name: Set Nginx worker_connections
   lineinfile: 
     path: /etc/nginx/nginx.conf
-    regexp: '^worker_connections'
-    line: 'worker_connections {{ worker_connections }};'
+    regexp: '^events'
+    line: 'events { worker_connections {{ worker_connections }};}'
     state: present
   notify: enable-docroot&nginx-changes 
 
