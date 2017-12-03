@@ -25,12 +25,13 @@
 
 - name: Set Nginx worker_processes & worker_connections
   lineinfile: 
-    dest: /etc/nginx/nginx.conf
-    #regexp: "^user"
+    path: /etc/nginx/nginx.conf
+    regexp: "^worker_processes"
     line: "worker_processes {{ worker_processes }};"
+    regexp: "^worker_connections"
     line: "worker_connections {{ worker_connections }};"
     state: present
-  notify: restart nginx 
+  notify: enable-docroot&nginx-changes 
 
 - name: Copy virtual config file to nginx conf
   template: src=celerone.conf dest=/etc/nginx/conf.d/celerone.conf owner=root group=root mode=644
