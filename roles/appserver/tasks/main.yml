@@ -23,13 +23,19 @@
   set_fact:
    worker_connections: "{{ worker_connections_out.stdout }}"
 
-- name: Set Nginx worker_processes & worker_connections
+- name: Set Nginx worker_processes
   lineinfile: 
     path: /etc/nginx/nginx.conf
-    regexp: "^worker_processes"
-    line: "worker_processes {{ worker_processes }};"
-    regexp: "^worker_connections"
-    line: "worker_connections {{ worker_connections }};"
+    regexp: '^worker_processes'
+    line: 'worker_processes {{ worker_processes }};'
+    state: present
+  notify: enable-docroot&nginx-changes
+
+- name: Set Nginx worker_connections
+  lineinfile: 
+    path: /etc/nginx/nginx.conf
+    regexp: '^worker_connections'
+    line: 'worker_connections {{ worker_connections }};'
     state: present
   notify: enable-docroot&nginx-changes 
 
