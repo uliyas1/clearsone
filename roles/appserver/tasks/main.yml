@@ -48,12 +48,28 @@
   - enable-docroot&nginx-changes
 
 - name: Creates docroot directory
-  file: path=/var/www state=directory 
+  file: path=/var/www state=directory
 
 - name: "Application Document root"
   template: src=local.html dest=/var/www/local.html owner=root group=root mode=777
   notify:
   - enable-docroot&nginx-changes
+
+- name: get hostname of the server
+  shell: hostname
+  register: hostname_out
+
+- name: set fact of hostname
+  set_fact:
+   host_name: "{{ hostname_out.stdout }}"
+
+- name: Set Nginx worker_connections
+  lineinfile: 
+    path: /var/www/local.html
+    regexp: '^Server'
+    line: 'Server Hostname is {{ host_name }};'
+    state: present
+  notify: enable-docroot&nginx-changes 
 
 - name: Ensure NGINX is started and enabled to start at boot.
   service: name=nginx state=started enabled=yes
