@@ -60,13 +60,21 @@
   set_fact:
    host_name: "{{ hostname_out.stdout }}"
 
-- name: Set Nginx worker_connections
+- name: Set hostname in local.html
   lineinfile: 
     path: /var/www/local.html
     regexp: '^Server'
-    line: '{{ host_name }};'
+    line: '{{ host_name }}'
     state: present
-  notify: enable-docroot&nginx-changes 
+  notify: enable-docroot&nginx-changes
+
+- name: Creates probe_applicant directory
+  file: path=/var/www/probe_applicant state=directory
+
+- name: "copy probe_applicant file"
+  template: src=index.html dest=/var/www/probe_applicant/index.html owner=root group=root mode=777
+  notify:
+  - enable-docroot&nginx-changes
 
 - name: Ensure NGINX is started and enabled to start at boot.
   service: name=nginx state=started enabled=yes
